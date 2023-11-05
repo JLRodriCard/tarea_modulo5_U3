@@ -4,12 +4,15 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
-require('dotenv').config();
+require('dotenv').config();//esto se completa para vincular base de datos
+var session = require('express-session'); //para hacer variables de sesiones
 
-var pool = require('./models/bd');
+var pool = require('./models/bd');//para base de datos
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var loginRouter = require('./routes/admin/login');// aca irá el archivo login.js
+var adminRouter = require('./routes/admin/novedades'); //creacion nueva pagina novedades
 
 var app = express();
 
@@ -23,13 +26,39 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);  
+//aca ponemos este codigo para las variables de sesiones, va antes de las paginas siempre
+
+app.use(session({
+  secret: 'jjllrrttvvrr2023',
+  cookie: { maxAge: null },
+  resave: false,
+  saveUninitialized: true
+}))
+
+//aca ponemos codigo para agregar una capa mas asegurar que haya que loguearse para ingresar en este caso a pagina novedades, funsion asyncrononica, porque se puede activar en cualquier momento
+
+secured = async (req, res, next) => {
+  try {
+    console.log(req.session.id_usuario);
+    if (req.session.id_usuario) {
+      next();
+    } else {
+      res.redirect('/admin/login');
+    }
+  } catch (error) {
+    console.log(error);
+  }
+} //cierro secured
+
+app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/admin/login', loginRouter);// para el login
+app.use('/admin/novedades',secured, adminRouter);
 
 
-pool.query('select * from tabla_de_prueba').then(function (resultados) {
+pool.query('select * from usuarios').then(function (resultados) {
   console.log(resultados)
-});
+}); //aca va el nombre de la tabla de mysql
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

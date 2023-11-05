@@ -13,4 +13,4 @@ pool.query= util.promisify(pool.query);
 
 module.exports=pool;
 
-    
+    //esto va tal cual esta escrito el codigo
