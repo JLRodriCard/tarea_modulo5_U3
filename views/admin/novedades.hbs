@@ -3,11 +3,57 @@
 <p><a href="/admin/login/logout" class="btn btn-sm btn-danger" , style="margin-bottom:20px;margin-left:40%;color:rgb(11, 9, 8)">Cerrar sesion <i class="fas fa-sing-out-alt"></i></a></p>
 >-->
 
-<div class="container" style="padding-top:25%;">
+<div class="container" style="padding-top:15%;">
 
     <div class="row">
         <p class="text-end">Bienvenido/a {{persona}}! al administrador del sitio <a class="btn btn-danger"
-                href="/admin/login/logout"> Cerrar sesion <i class="fas fa-sing-out-alt"></i></a></p>
+                href="/admin/login/logout" style="color: black"> Cerrar sesion <i
+                    class="fa-solid fa-right-to-bracket"></i></a></p>
+
+    </div>
+
+    <div class="row">
+
+        <div class="col-5 tex-end" style="margin-left:42% ">
+            <a class="btn btn-success" href="/admin/novedades/agregar" style="color: black; margin-bottom:15px;"> <i class fa fa-plus
+                    aria-hidden="true"></i> Generar Novedad </a>
+        </div>
+
+        <div class=" col-7" style="margin-left:39% ;">
+            <h4 style="color: black;">Lista de Novedades</h4>
+        </div>
+
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <table class="table">
+                <thead>
+                    <tr class="table-dark">
+                        <th scope="col">#</th>
+                        <th scope="col">Titulo</th>
+                        <th scope="text-end">Acciones</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each novedades}}
+                    <tr>
+                        <th scope="row">{{id}}</th>
+                        <td>{{titulo}}</td>
+                        <td class="text-end">
+                            <a class="btn btn-secondary" href="">
+                                <i class="fa fa-pencil" aria-hidden="true"></i></a>
+
+                            <a class="btn btn-secondary" href="">
+                                <i class="fa fa-trash" aria-hidden="true"></i></a>
+                        </td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+
+        </div>
 
     </div>
 

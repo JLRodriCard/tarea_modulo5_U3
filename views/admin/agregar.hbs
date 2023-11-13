@@ -1,0 +1,33 @@
+<div class="agregar_imagen">
+    <div class="container" style="padding-top: 15%;">
+        <div class=" row">
+            <div class="col-6 offset-3">
+                <h4 style="color: rgb(9, 8, 9); margin-left: 20%; padding-bottom:15px;font-weight:bold;"> Agregar Novedades de la
+                    Empresa</h4>
+                <form action="/admin/novedades/agregar" method="post">
+                    <div class="mb-3 row">
+                        <input type="text" class="form-control" placeholder="Titulo" name="titulo">
+                    </div>
+                    <div class="mb-3 row">
+                        <textarea type="text" class="form-control" placeholder="Subtitulo" name="subtitulo">
+                    </textarea>
+                    </div>
+                    <div class="mb-3 row">
+                        <textarea type="text" class="form-control" placeholder="Cuerpo" name="cuerpo">
+                    </textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="margin-bottom: 15px;">Guardar </button>
+                </form>
+                {{#if error}}
+
+                <p>{{message}}</p>
+
+                {{/if}}
+
+
+            </div>
+        </div>
+
+
+    </div>
+</div>

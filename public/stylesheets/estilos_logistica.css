@@ -678,3 +678,13 @@ input{
 /* FIN ESTILOS COTIZADOR/CONTACTO*/
 
 
+/*agregar.hbs*/
+
+.agregar_imagen{
+    background-image: url(../images/forwarder2.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+
+
+}
+
