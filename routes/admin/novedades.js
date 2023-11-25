@@ -1,6 +1,10 @@
 var express = require('express');
 var router = express.Router();
 var novedadesModel = require('../../models/novedadesModel');
+const util = require('util');
+const cloudinary = require('cloudinary').v2;
+const uploader = util.promisify(cloudinary.uploader.upload);
+
 
 
 /* GET home page. */
@@ -17,9 +21,9 @@ router.get('/', async function (req, res, next) {
 });
 
 
-router.get('/agregar',(req, res, next)=>{
-    res.render('admin/agregar',{
-        layout:'admin/layout'
+router.get('/agregar', (req, res, next) => {
+    res.render('admin/agregar', {
+        layout: 'admin/layout'
 
     })
 });
@@ -28,10 +32,21 @@ router.get('/agregar',(req, res, next)=>{
 router.post('/agregar', async (req, res, next) => {
     try {
 
+        var img_id='';
+            if (req.files && Object.keys(req.files).length>0){
+                    Imagen=req.files.imagen;
+                    img_id=(await uploader (imagen.tempFilePath)).public_id;
+            }
+
         console.log(req.body)
 
         if (req.body.titulo != "" && req.body.subtitulo != "" && req.body.cuerpo != "") {
-            await novedadesModel.insertNovedad(req.body);
+            await novedadesModel.insertNovedad({
+                ...req.body,
+                img_id
+            });
+
+
             res.redirect('/admin/novedades')
         } else {
             res.render('admin/agregar', {
@@ -47,12 +62,12 @@ router.post('/agregar', async (req, res, next) => {
             error: true,
             message: 'No se pueden cargar novedades'
         })
-    }
+    }   
 
 });
 
 /*para eliminar una novedad aplica la siguiente funcion*/
-router.get('/eliminar/:id', async (req, res, next) =>{
+router.get('/eliminar/:id', async (req, res, next) => {
     var id = req.params.id;
     await novedadesModel.deleteNovedadesById(id);
     res.redirect('/admin/novedades');
@@ -66,13 +81,13 @@ router.get('/modificar/:id', async (req, res, next) => {
     var id = req.params.id;
     console.log(req.params.id);
     var novedad = await novedadesModel.getNovedadById(id);
-   
+
 
     res.render('admin/modificar', {
-    layout: 'admin/layout',
-    novedad 
+        layout: 'admin/layout',
+        novedad
     })
-    
+
 
 
 });
@@ -80,7 +95,7 @@ router.get('/modificar/:id', async (req, res, next) => {
 
 /* para impactar la modificacion en la base de datos*/
 
-router.post('/modificar', async (req,res,next)=>{
+router.post('/modificar', async (req, res, next) => {
 
     try {
 
@@ -97,7 +112,7 @@ router.post('/modificar', async (req,res,next)=>{
     } catch (error) {
 
         console.log(error)
-        res.render ('admin/modificar', {
+        res.render('admin/modificar', {
             layout: 'admin/layout',
             error: true,
             message: 'No se pudo modificar la novedad seleccionada'

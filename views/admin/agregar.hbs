@@ -2,19 +2,22 @@
     <div class="container" style="padding-top: 15%;">
         <div class=" row">
             <div class="col-6 offset-3">
-                <h4 style="color: rgb(9, 8, 9); margin-left: 20%; padding-bottom:15px;font-weight:bold;"> Agregar Novedades de la
+                <h4 style="color: rgb(9, 8, 9); margin-left: 20%; padding-bottom:15px;font-weight:bold;"> Agregar
+                    Novedades de la
                     Empresa</h4>
-                <form action="/admin/novedades/agregar" method="post">
+                <form action="/admin/novedades/agregar" method="post" enctype="multipart/form-data">
+
                     <div class="mb-3 row">
                         <input type="text" class="form-control" placeholder="Titulo" name="titulo">
                     </div>
                     <div class="mb-3 row">
-                        <textarea type="text" class="form-control" placeholder="Subtitulo" name="subtitulo">
-                    </textarea>
+                        <textarea type="text" class="form-control" placeholder="Subtitulo" name="subtitulo"></textarea>
                     </div>
                     <div class="mb-3 row">
-                        <textarea type="text" class="form-control" placeholder="Cuerpo" name="cuerpo">
-                    </textarea>
+                        <label style="color:rgb(12, 235, 224);font-weight:bold;">Imagen:<input type="file" class="form-control" name="imagen" id="imagen" /></label>
+                    </div>
+                    <div class="mb-3 row">
+                        <textarea type="text" class="form-control" placeholder="Cuerpo" name="cuerpo"></textarea>
                     </div>
                     <button type="submit" class="btn btn-primary" style="margin-bottom: 15px;">Guardar </button>
                 </form>
