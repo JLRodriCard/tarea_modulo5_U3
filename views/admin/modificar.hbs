@@ -5,7 +5,7 @@
                 <h4 style="color: rgb(9, 8, 9); margin-left: 20%; padding-bottom:15px;font-weight:bold;"> Modificar
                     Novedades de la
                     Empresa</h4>
-                <form action="/admin/novedades/modificar" method="post">
+                <form action="/admin/novedades/modificar" method="post" enctype="multipart/form-data">
                     <input type="hidden" value="{{novedad.id}}" name="id">
                     <div class="form-group">
                         <label for="" style="color: rgb(254, 251, 251);font-weight:bold;">Titulo</label>
@@ -22,6 +22,25 @@
                         <textarea name="cuerpo" class="form-control">{{novedad.cuerpo}}
                         </textarea>
                     </div>
+
+
+                    <div class="mb-3 row">
+                        <p>
+                            <label style="color: rgb(254, 251, 251);font-weight:bold;">imagen: <input type="file" 
+                            class="form-control" name= "imagen" id="imagen" /></label>
+                        </p>
+
+                        <p> 
+                            <label style="color: rgb(254, 251, 251);font-weight:bold;"><input type="checkbox" name="img_delete"
+                            id="img_delete" value="1">
+                            Eliminar imagen actual?</label>
+                            <input type="hidden" name="img_original" value="
+                            {{novedad.img_id}}">
+                        </p>
+
+                    </div>
+
+
 
                     <button type="submit" class="btn btn-primary"
                         style="margin-bottom: 15px; margin-top: 25px;">Modificar </button>
